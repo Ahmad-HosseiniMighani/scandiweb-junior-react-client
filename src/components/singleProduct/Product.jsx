@@ -115,6 +115,55 @@ class ProductComponent extends React.Component {
         )
     );
   };
+  handleAddToCart = () => {
+    const { selectedAttributes } = this.state;
+    const productId = this.props.productId;
+    //get all cart items
+    let myCart = JSON.parse(localStorage.getItem("myCart"));
+    //lets check if we have an item with exatcly same id and attributes.
+    let existingProductIndex = -1;
+    if (myCart === null) {
+      myCart = [];
+    }
+    for (let i = 0; i < myCart.length; i++) {
+      // check if we have any product with same id
+      if (myCart[i].productId === productId) {
+        // check if we have any product with exatctly same attributes
+        let haveDifferentAttribute = false;
+        if (selectedAttributes.length !== myCart[i].attributes.length) {
+          haveDifferentAttribute = true;
+        } else {
+          for (let j = 0; j < myCart[i].attributes.length; j++) {
+            let haveThisAttributeWithSameValue = false;
+            for (let k = 0; k < selectedAttributes.length; k++) {
+              if (
+                myCart[i].attributes[j]._id === selectedAttributes[k]._id &&
+                myCart[i].attributes[j].value === selectedAttributes[k].value
+              ) {
+                haveThisAttributeWithSameValue = true;
+              }
+            }
+            if (!haveThisAttributeWithSameValue) haveDifferentAttribute = true;
+          }
+        }
+        if (!haveDifferentAttribute) {
+          existingProductIndex = i;
+        }
+      }
+    }
+    if (existingProductIndex < 0) {
+      myCart.push({
+        productId: this.props.productId,
+        attributes: selectedAttributes,
+        amount: 1,
+      });
+      localStorage.setItem("myCart", JSON.stringify(myCart));
+    } else {
+      myCart[existingProductIndex].amount =
+        myCart[existingProductIndex].amount + 1;
+      localStorage.setItem("myCart", JSON.stringify(myCart));
+    }
+  };
   render() {
     const {
       componentIsloading,
@@ -153,8 +202,13 @@ class ProductComponent extends React.Component {
               )}
             </div>
             {this.renderPrice(data.prices)}
-            <button className="btn add-to-cart">ADD TO CART</button>
-            <div className="product-description" dangerouslySetInnerHTML={{ __html: data.description }} />
+            <button className="btn add-to-cart" onClick={this.handleAddToCart}>
+              ADD TO CART
+            </button>
+            <div
+              className="product-description"
+              dangerouslySetInnerHTML={{ __html: data.description }}
+            />
           </div>
         </div>
       </main>
