@@ -13,6 +13,7 @@ class ProductComponent extends React.Component {
     componentIsLoading: true,
     selectedImageUrl: "",
     selectedAttributes: [],
+    errors: [],
   };
   async componentDidMount() {
     try {
@@ -34,13 +35,20 @@ class ProductComponent extends React.Component {
     this.setState({ selectedImageUrl });
   };
   handleAttributeRender = (attribute) => {
-    // if (attribute.type === "text")
+    const { errors } = this.state;
     return (
       <div
         className={"product-attribute " + attribute.type + "-attribute"}
         key={attribute.id}
       >
-        <span className="attribute-title">{attribute.name}:</span>
+        <span
+          className={
+            "attribute-title" +
+            (errors.indexOf(attribute.id) >= 0 ? " warrning-blinking" : "")
+          }
+        >
+          {attribute.name}:
+        </span>
         <div className="attribute-items">
           {attribute.items.map((item) => (
             <span
@@ -66,6 +74,7 @@ class ProductComponent extends React.Component {
     );
   };
   handleAttributeSelection = (attributeId, attributeValue) => {
+    const { errors } = this.state;
     let selectedAttributes = [...this.state.selectedAttributes];
     let indexOfSelectedAttribute = -1;
     let needRerender = true;
@@ -84,10 +93,14 @@ class ProductComponent extends React.Component {
         _id: attributeId,
         value: attributeValue,
       });
-    } else {
-      //remove tha betch
     }
-    if (needRerender) this.setState({ selectedAttributes });
+    if (needRerender) {
+      const attributeErrorIndex = errors.indexOf(attributeId);
+      if (attributeErrorIndex >= 0) {
+        errors.splice(attributeErrorIndex, 1);
+      }
+      this.setState({ selectedAttributes, errors });
+    }
   };
   checkIsAttributeSelected = (attributeId, attributeValue) => {
     let selectedAttributes = [...this.state.selectedAttributes];
@@ -116,9 +129,27 @@ class ProductComponent extends React.Component {
     );
   };
   handleAddToCart = () => {
-    const { selectedAttributes } = this.state;
+    const { selectedAttributes, errors, data } = this.state;
     const productId = this.props.productId;
+    // console.log(errors);
     //get all cart items
+    if (errors.length > 0) return;
+    // let find where there error is
+    if (data.attributes.length > selectedAttributes.length) {
+      for (let i = 0; i < data.attributes.length; i++) {
+        let attributeSelected = false;
+        for (let j = 0; j < selectedAttributes.length; j++) {
+          if (data.attributes[i].id === selectedAttributes[j]._id) {
+            attributeSelected = true;
+          }
+        }
+        if (!attributeSelected) {
+          errors.push(data.attributes[i].id);
+        }
+      }
+      this.setState({ errors });
+      return;
+    }
     let myCart = JSON.parse(localStorage.getItem("myCart"));
     //lets check if we have an item with exatcly same id and attributes.
     let existingProductIndex = -1;
@@ -165,15 +196,9 @@ class ProductComponent extends React.Component {
     }
   };
   render() {
-    const {
-      componentIsloading,
-      data,
-      selectedImageUrl,
-      selectedAttributes,
-    } = this.state;
+    const { componentIsloading, data, selectedImageUrl, errors } = this.state;
     if (componentIsloading) return <main>Loading bitch</main>;
     if (data === null) return <main>what tha Heil!?</main>;
-    // console.table(selectedAttributes);
     return (
       <main>
         <div className="product-container">
@@ -202,9 +227,22 @@ class ProductComponent extends React.Component {
               )}
             </div>
             {this.renderPrice(data.prices)}
-            <button className="btn add-to-cart" onClick={this.handleAddToCart}>
-              ADD TO CART
-            </button>
+            {data.inStock && (
+              <button
+                className="btn add-to-cart"
+                onClick={this.handleAddToCart}
+              >
+                ADD TO CART
+              </button>
+            )}
+            {!data.inStock && (
+              <button className="btn out-of-stock" disabled={true}>
+                OUT OF STOCK
+              </button>
+            )}
+            {errors.length > 0 && (
+              <p className="errors">Please select all necessary attributes.</p>
+            )}
             <div
               className="product-description"
               dangerouslySetInnerHTML={{ __html: data.description }}

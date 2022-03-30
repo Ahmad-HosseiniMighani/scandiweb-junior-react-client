@@ -408,6 +408,21 @@ main h2.title:first-letter {
   margin-bottom: 10px;
   text-transform: uppercase;
 }
+.product-container .product-attribute .attribute-title.warrning-blinking {
+  color: red;
+  animation: infinite 0.6s linear blinking;
+}
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .product-container .product-attribute.text-attribute .attribute-items {
   display: flex;
   flex-wrap: wrap;
@@ -472,6 +487,7 @@ main h2.title:first-letter {
   line-height: 18px;
 }
 .product-container .add-to-cart {
+  cursor: pointer;
   align-items: center;
   padding: 16px 32px;
   width: 100%;
@@ -483,6 +499,26 @@ main h2.title:first-letter {
   color: #fff;
   box-sizing: border-box;
   margin-bottom: 40px;
+}
+.product-container .out-of-stock {
+  align-items: center;
+  padding: 16px 32px;
+  width: 100%;
+  background: var(--color-text);
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+}
+.product-container p.errors {
+  text-align: center;
+  margin-top: unset;
+  margin-bottom: 40px;
+  color: red;
+  font-weight: 800;
 }
 .product-container .product-description {
   /* IDK if it's ok to do this or not, long description won't look good  with this design*/
