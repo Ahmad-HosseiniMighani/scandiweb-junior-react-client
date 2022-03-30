@@ -81,7 +81,9 @@ header nav.navbar .nav-actions {
   align-items: center;
   margin-right: 100px;
 }
-header nav.navbar .nav-actions span:hover {
+header nav.navbar .nav-actions,
+.mini-cart-button header nav.navbar .nav-actions,
+.change-currency-button {
   cursor: pointer;
 }
 header nav.navbar .nav-actions > span:not(:last-child) {
@@ -223,6 +225,7 @@ header
   .mini-cart-items
   .item {
   display: flex;
+  margin-bottom: 40px;
 }
 header
   nav.navbar
@@ -231,13 +234,122 @@ header
   .dropdown-content
   .mini-cart-items
   .item
-  .product-title {
+  .product-details {
   margin-right: auto;
-  font-family: "Raleway";
   font-weight: 300;
   font-size: 16px;
   line-height: 160%;
   white-space: break-spaces;
+}
+
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute
+  .attribute-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute:not(:last-child) {
+  margin-bottom: 10px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute
+  .attribute-items
+  .attribute-item {
+  font-family: "Source Sans Pro";
+  background: rgba(166, 166, 166, 0.2);
+  border: 1px solid #a6a6a6;
+  color: #a6a6a6;
+  box-sizing: border-box;
+  width: 38px;
+  height: 24px;
+  font-weight: 400;
+  font-size: 0.8em;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item {
+  width: 24px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute.text-attribute
+  .attribute-items
+  .attribute-item.selected {
+  background-color: #fff;
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item.selected {
+  border-radius: 50%;
+  border-color: var(--color-text);
+}
+
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-title {
+  margin-bottom: 5px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-price {
+  font-weight: 600;
 }
 header
   nav.navbar

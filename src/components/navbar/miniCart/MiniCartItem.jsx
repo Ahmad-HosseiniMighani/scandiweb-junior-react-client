@@ -1,37 +1,92 @@
 import React from "react";
 import { Currency } from "../../../contexts";
-import { GetSpecificProduct, client } from "../../../graphql/queries";
 import { ReactComponent as PlusIcon } from "../../../images/plus.svg";
 import { ReactComponent as MinusIcon } from "../../../images/minus.svg";
 class MiniCartItem extends React.Component {
-  state = { data: {}, componentIsLoading: true };
-  async componentDidMount() {
-    try {
-      const { data } = await client.query({
-        query: GetSpecificProduct(this.props.cartItem.productId),
-      });
-      //   console.log(data);
-      this.setState({
-        componentIsLoading: false,
-        data: data.product,
-        selectedImageUrl: data.product.gallery[0],
-      });
-      //   this.setState({ res });
-    } catch (error) {
-      console.log(error);
+  state = { data: {} };
+
+  handleAttributeRender = (attribute, selectedAttributes) => {
+    return (
+      <div
+        className={"product-attribute " + attribute.type + "-attribute"}
+        key={attribute.id}
+      >
+        <div className="attribute-items">
+          {attribute.items.map((item) => (
+            <span
+              key={item.id}
+              className={
+                "attribute-item no-select" +
+                this.checkIsAttributeSelected(
+                  attribute.id,
+                  item.value,
+                  selectedAttributes
+                )
+              }
+              style={
+                attribute.type === "swatch"
+                  ? {
+                      backgroundColor:
+                        item.value +
+                        (this.checkIsAttributeSelected(
+                          attribute.id,
+                          item.value,
+                          selectedAttributes
+                        )
+                          ? ""
+                          : "90"),
+                    }
+                  : {}
+              }
+            >
+              {attribute.type === "text" && item.value}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  };
+  checkIsAttributeSelected = (
+    attributeId,
+    attributeValue,
+    selectedAttributes
+  ) => {
+    for (let i = 0; i < selectedAttributes.length; i++) {
+      if (
+        selectedAttributes[i]._id === attributeId &&
+        selectedAttributes[i].value === attributeValue
+      ) {
+        return " selected";
+      }
     }
-  }
+    return "";
+  };
   render() {
+    console.log(this.props);
     const { currentCurrency } = this.context;
-    const { data, componentIsLoading } = this.state;
-    // console.log(data);
-    const { cartItem } = this.props;
-    if (componentIsLoading) return <div>geh</div>;
+    const { cartItem, product: data } = this.props;
+    console.log(data);
     return (
       <div className="item">
-        <div className="product-title">
-          <span>{data.brand}</span>
-          <span>{data.name}</span>
+        <div className="product-details">
+          <div className="product-title">
+            <span>{data.brand}</span>
+            <span>{data.name}</span>
+          </div>
+          {data.prices.map(
+            (price) =>
+              price.currency.label === currentCurrency.label && (
+                <span className="product-price" key={"PRICE_" + data.id}>
+                  {price.currency.symbol}
+                  {price.amount}
+                </span>
+              )
+          )}
+          <div className="product-attributes">
+            {data.attributes.map((attribute) =>
+              this.handleAttributeRender(attribute, cartItem.attributes)
+            )}
+          </div>
         </div>
         <div className="control-buttons">
           <button>

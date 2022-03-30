@@ -1,6 +1,7 @@
 import React from "react";
-import { ReactComponent as CartIcon } from "../../../images/cart.svg";
 import MiniCartItem from "./MiniCartItem";
+import { ReactComponent as CartIcon } from "../../../images/cart.svg";
+import { GetSpecificProduct, client } from "../../../graphql/queries";
 
 class MiniCart extends React.Component {
   constructor(props) {
@@ -12,16 +13,29 @@ class MiniCart extends React.Component {
   }
   state = {
     myCart: [],
+    products: [],
     componentIsLoading: true,
     isDropdownCollapsed: true,
   };
   async componentDidMount() {
     try {
       const myCart = JSON.parse(localStorage.getItem("myCart"));
-      console.log(myCart);
+      let products = [];
+      let calledProductsId = [];
+      for await (const item of myCart) {
+        if (calledProductsId.indexOf(item.productId) < 0) {
+          const { data } = await client.query({
+            query: GetSpecificProduct(item.productId),
+          });
+          calledProductsId.push(item.productId);
+          products.push(data.product);
+        }
+      }
+      console.log("yeeeeeeeeeeeet");
       this.setState({
         componentIsLoading: false,
         myCart,
+        products,
       });
       //   this.setState({ res });
     } catch (error) {
@@ -62,17 +76,27 @@ class MiniCart extends React.Component {
     // console.log(key);
     return key;
   };
+  getProductInfo = (productId) => {
+    const { products } = this.state;
+    console.log(products);
+    for (let i = 0; i < products.length; i++)
+      if (products[i].id === productId) return products[i];
+    return {};
+  };
   render() {
     const { componentIsLoading, myCart, isDropdownCollapsed } = this.state;
     // const { toggleDropdownBackDrop } = this.props;
     if (componentIsLoading) return <div>godamn</div>;
     return (
-      <span className="mini-cart no-select">
+      <span className="mini-cart">
         <div
           className={"dropdown" + (isDropdownCollapsed ? " collapsed" : "")}
           ref={this.dropdownRef}
         >
-          <span className="mini-cart-button" onClick={this.handleDropdown}>
+          <span
+            className="mini-cart-button no-select"
+            onClick={this.handleDropdown}
+          >
             <CartIcon />
           </span>
           <div className="dropdown-content right">
@@ -84,6 +108,7 @@ class MiniCart extends React.Component {
               {myCart.map((cartItem) => (
                 <MiniCartItem
                   cartItem={cartItem}
+                  product={this.getProductInfo(cartItem.productId)}
                   key={this.handleCreateKey(cartItem)}
                 />
               ))}
