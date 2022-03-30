@@ -1,11 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import {
-  //   useQuery,
-  GetSpecificProduct,
-  client,
-  //   gql,
-} from "../../graphql/queries";
+import { GetSpecificProduct, client } from "../../graphql/queries";
 
 class ProductComponent extends React.Component {
   state = {

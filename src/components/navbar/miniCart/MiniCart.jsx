@@ -1,12 +1,6 @@
 import React from "react";
-import { Currency } from "../../../contexts";
-import {
-  //   useQuery,
-  CURRENCIES,
-  client,
-  //   gql,
-} from "../../../graphql/queries";
 import { ReactComponent as CartIcon } from "../../../images/cart.svg";
+import MiniCartItem from "./MiniCartItem";
 
 class MiniCart extends React.Component {
   constructor(props) {
@@ -17,16 +11,17 @@ class MiniCart extends React.Component {
     );
   }
   state = {
-    data: {},
+    myCart: [],
     componentIsLoading: true,
     isDropdownCollapsed: true,
   };
   async componentDidMount() {
     try {
-      // put your fuhcking API here mate
+      const myCart = JSON.parse(localStorage.getItem("myCart"));
+      console.log(myCart);
       this.setState({
         componentIsLoading: false,
-        // data,
+        myCart,
       });
       //   this.setState({ res });
     } catch (error) {
@@ -60,10 +55,16 @@ class MiniCart extends React.Component {
       this.setState({ isDropdownCollapsed: true });
     }
   }
+  handleCreateKey = (cartItem) => {
+    let key = cartItem.productId + "";
+    for (let i = 0; i < cartItem.attributes.length; i++)
+      key = key + "_" + cartItem.attributes[i].value;
+    // console.log(key);
+    return key;
+  };
   render() {
-    const { componentIsLoading, data, isDropdownCollapsed } = this.state;
-    const { toggleDropdownBackDrop } = this.props;
-    const { currentCurrency } = this.context;
+    const { componentIsLoading, myCart, isDropdownCollapsed } = this.state;
+    // const { toggleDropdownBackDrop } = this.props;
     if (componentIsLoading) return <div>godamn</div>;
     return (
       <span className="mini-cart no-select">
@@ -79,12 +80,19 @@ class MiniCart extends React.Component {
               <span>My Bag, </span>
               <span> X Items</span>
             </div>
+            <div className="mini-cart-items">
+              {myCart.map((cartItem) => (
+                <MiniCartItem
+                  cartItem={cartItem}
+                  key={this.handleCreateKey(cartItem)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </span>
     );
   }
 }
-MiniCart.contextType = Currency;
 
 export default MiniCart;
