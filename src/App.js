@@ -7,26 +7,39 @@ import { Currency } from "./contexts";
 
 class App extends React.Component {
   state = {
-    currentCurrency: {
-      label: "",
-      symbol: "",
+    currencyContext: {
+      currentCurrency: {
+        label: "",
+        symbol: "",
+      },
+      setCurrency: () => {},
     },
-    setCurrency: () => {},
+    myCart: [],
+    totalItems: 0,
   };
-  componentDidMount() {
+  async componentDidMount() {
     //get it from the Yeeeeeeeeeeeeeeeeeet!
     this.setState({
-      currentCurrency: { label: "USD", symbol: "$" },
-      setCurrency: (newCurrency) => {
-        this.setState({ currentCurrency: newCurrency });
+      currencyContext: {
+        currentCurrency: { label: "USD", symbol: "$" },
+        setCurrency: (newCurrency) => {
+          this.setState({ currentCurrency: newCurrency });
+        },
       },
     });
   }
+  updateMiniCart = (myCart) => {
+    let totalItems = 0;
+    for (const item of myCart) {
+      totalItems = totalItems + item.amount;
+    }
+    this.setState({ myCart, totalItems });
+  };
   render() {
     return (
       // <React.Fragment>
-      <Currency.Provider value={this.state}>
-        <Navbar />
+      <Currency.Provider value={this.state.currencyContext}>
+        <Navbar myCart={this.state.myCart} totalItems={this.state.totalItems} />
         <Routes>
           {/* 
               Replacing might not be ideal here, but we have no homepage and i dont know if we're going to have or not, so for now i redirect it to category page (all) 
@@ -37,8 +50,14 @@ class App extends React.Component {
             <Route path=":categoryName" element={<Products />} />
             <Route index element={<Navigate to="*" replace />} />
           </Route>
-          <Route path="/product" element={<Product />}>
-            <Route path=":productId" element={<Product />} />
+          <Route
+            path="/product"
+            element={<Product updateMiniCart={this.updateMiniCart} />}
+          >
+            <Route
+              path=":productId"
+              element={<Product updateMiniCart={this.updateMiniCart} />}
+            />
             <Route index element={<Navigate to="*" replace />} />
           </Route>
           <Route

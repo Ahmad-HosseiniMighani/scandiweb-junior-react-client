@@ -11,6 +11,7 @@ class ProductComponent extends React.Component {
     errors: [],
   };
   async componentDidMount() {
+    console.log("PRODUCT Mounted.");
     try {
       const { data } = await client.query({
         query: GetSpecificProduct(this.props.productId),
@@ -25,6 +26,9 @@ class ProductComponent extends React.Component {
     } catch (error) {
       console.log(error);
     }
+  }
+  componentDidUpdate() {
+    console.log("PRODUCT UPDATED");
   }
   handleSelectProductImage = (selectedImageUrl) => {
     this.setState({ selectedImageUrl });
@@ -126,10 +130,9 @@ class ProductComponent extends React.Component {
   handleAddToCart = () => {
     const { selectedAttributes, errors, data } = this.state;
     const productId = this.props.productId;
-    // console.log(errors);
     //get all cart items
     if (errors.length > 0) return;
-    // let find where there error is
+    // let find where the error is
     if (data.attributes.length > selectedAttributes.length) {
       for (let i = 0; i < data.attributes.length; i++) {
         let attributeSelected = false;
@@ -189,8 +192,10 @@ class ProductComponent extends React.Component {
         myCart[existingProductIndex].amount + 1;
       localStorage.setItem("myCart", JSON.stringify(myCart));
     }
+    this.props.updateMiniCart(myCart);
   };
   render() {
+    console.log("PRODUCT Rendered.");
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;
     if (componentIsloading) return <main>Loading bitch</main>;
     if (data === null) return <main>what tha Heil!?</main>;

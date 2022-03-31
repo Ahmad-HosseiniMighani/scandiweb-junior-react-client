@@ -25,7 +25,6 @@ class Currencies extends React.Component {
       const { data } = await client.query({
         query: CURRENCIES,
       });
-      console.log(data);
       this.setState({
         componentIsLoading: false,
         data,

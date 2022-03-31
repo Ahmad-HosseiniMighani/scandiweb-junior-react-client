@@ -1,10 +1,28 @@
 import React from "react";
 import { Currency } from "../../../contexts";
+import { GetSpecificProduct, client } from "../../../graphql/queries";
 import { ReactComponent as PlusIcon } from "../../../images/plus.svg";
 import { ReactComponent as MinusIcon } from "../../../images/minus.svg";
 class MiniCartItem extends React.Component {
-  state = { data: {} };
-
+  state = { data: {}, componentIsLoading: true };
+  async componentDidMount() {
+    // if we dont have a data from server we try to fetch it
+    const { cartItem, product } = this.props;
+    if (product !== null) return;
+    try {
+      const { data } = await client.query({
+        query: GetSpecificProduct(cartItem.productId),
+      });
+      this.setState({
+        componentIsLoading: false,
+        data,
+      });
+      //   this.setState({ res });
+    } catch (error) {
+      console.log(error);
+      this.setState({ componentIsLoading: false });
+    }
+  }
   handleAttributeRender = (attribute, selectedAttributes) => {
     return (
       <div
@@ -61,27 +79,64 @@ class MiniCartItem extends React.Component {
     }
     return "";
   };
+  handleChangeItemAmount = (product, amount) => {
+    let myCart = JSON.parse(localStorage.getItem("myCart"));
+    let indexOfItemToRemove = -1;
+    for (let i = 0; i < myCart.length; i++) {
+      // find it by id
+      if (product.productId === myCart[i].productId) {
+        // find it by attributes
+        let haveDifferentAttribute = false;
+        for (let j = 0; j < myCart[i].attributes.length; j++) {
+          let haveThisAttributeWithSameValue = false;
+          for (let k = 0; k < product.attributes.length; k++) {
+            if (
+              myCart[i].attributes[j]._id === product.attributes[k]._id &&
+              myCart[i].attributes[j].value === product.attributes[k].value
+            ) {
+              haveThisAttributeWithSameValue = true;
+            }
+          }
+          if (!haveThisAttributeWithSameValue) haveDifferentAttribute = true;
+        }
+        if (!haveDifferentAttribute) {
+          myCart[i].amount = myCart[i].amount + amount;
+          if (myCart[i].amount < 1) indexOfItemToRemove = i;
+        }
+      }
+    }
+    if (indexOfItemToRemove >= 0) {
+      myCart.splice(indexOfItemToRemove, 1);
+    }
+    localStorage.setItem("myCart", JSON.stringify(myCart));
+    // console.log(myCart);
+  };
   render() {
-    console.log(this.props);
     const { currentCurrency } = this.context;
-    const { cartItem, product: data } = this.props;
-    console.log(data);
+    const { componentIsLoading } = this.state;
+    if (componentIsLoading) return <div>What cha be doing mon!</div>;
+    let useStateData = true;
+    if (this.props.product !== null) useStateData = false;
+    const { cartItem } = this.props;
+    const data = useStateData ? this.state.data : this.props.product;
     return (
       <div className="item">
         <div className="product-details">
-          <div className="product-title">
-            <span>{data.brand}</span>
-            <span>{data.name}</span>
+          <div>
+            <div className="product-title">
+              <span>{data.brand}</span>
+              <span>{data.name}</span>
+            </div>
+            {data.prices.map(
+              (price) =>
+                price.currency.label === currentCurrency.label && (
+                  <span className="product-price" key={"PRICE_" + data.id}>
+                    {price.currency.symbol}
+                    {price.amount}
+                  </span>
+                )
+            )}
           </div>
-          {data.prices.map(
-            (price) =>
-              price.currency.label === currentCurrency.label && (
-                <span className="product-price" key={"PRICE_" + data.id}>
-                  {price.currency.symbol}
-                  {price.amount}
-                </span>
-              )
-          )}
           <div className="product-attributes">
             {data.attributes.map((attribute) =>
               this.handleAttributeRender(attribute, cartItem.attributes)
@@ -89,11 +144,11 @@ class MiniCartItem extends React.Component {
           </div>
         </div>
         <div className="control-buttons">
-          <button>
+          <button onClick={() => this.handleChangeItemAmount(cartItem, 1)}>
             <PlusIcon />
           </button>
           {cartItem.amount}
-          <button>
+          <button onClick={() => this.handleChangeItemAmount(cartItem, -1)}>
             <MinusIcon />
           </button>
         </div>

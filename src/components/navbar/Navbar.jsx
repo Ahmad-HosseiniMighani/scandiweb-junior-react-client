@@ -15,6 +15,7 @@ class Navbar extends React.Component {
   };
   render() {
     const { isBackDropVisible } = this.state;
+    console.log(this.props.myCart);
     return (
       <React.Fragment>
         <header>
@@ -28,6 +29,8 @@ class Navbar extends React.Component {
                 <Currencies />
                 <MiniCart
                   toggleDropdownBackDrop={this.toggleDropdownBackDrop}
+                  myCart={this.props.myCart}
+                  totalItems={this.props.totalItems}
                 />
               </div>
             </div>
