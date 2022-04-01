@@ -8,14 +8,17 @@ class MiniCartItem extends React.Component {
   async componentDidMount() {
     // if we dont have a data from server we try to fetch it
     const { cartItem, product } = this.props;
-    if (product !== null) return;
+    if (product !== null) {
+      this.setState({ componentIsLoading: false });
+      return;
+    }
     try {
       const { data } = await client.query({
         query: GetSpecificProduct(cartItem.productId),
       });
       this.setState({
         componentIsLoading: false,
-        data,
+        data: data.product,
       });
       //   this.setState({ res });
     } catch (error) {
@@ -109,7 +112,7 @@ class MiniCartItem extends React.Component {
       myCart.splice(indexOfItemToRemove, 1);
     }
     localStorage.setItem("myCart", JSON.stringify(myCart));
-    // console.log(myCart);
+    this.props.updateMiniCart(myCart);
   };
   render() {
     const { currentCurrency } = this.context;
@@ -119,6 +122,7 @@ class MiniCartItem extends React.Component {
     if (this.props.product !== null) useStateData = false;
     const { cartItem } = this.props;
     const data = useStateData ? this.state.data : this.props.product;
+    console.log(data);
     return (
       <div className="item">
         <div className="product-details">

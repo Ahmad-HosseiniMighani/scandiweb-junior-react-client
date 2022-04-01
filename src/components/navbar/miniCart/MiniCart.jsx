@@ -1,5 +1,6 @@
 import React from "react";
 import MiniCartItem from "./MiniCartItem";
+import { Currency } from "../../../contexts";
 import { ReactComponent as CartIcon } from "../../../images/cart.svg";
 import { GetSpecificProduct, client } from "../../../graphql/queries";
 
@@ -14,13 +15,17 @@ class MiniCart extends React.Component {
   state = {
     myCart: [],
     totalItems: 0,
+    totalPrice: 0,
     products: [],
     calledProductsId: [],
     componentIsLoading: true,
     isDropdownCollapsed: true,
   };
   async componentDidMount() {
+    const { currentCurrency } = this.context;
+
     let totalItems = 0;
+    let totalPrice = 0;
     try {
       const myCart = JSON.parse(localStorage.getItem("myCart"));
       let products = [];
@@ -32,6 +37,9 @@ class MiniCart extends React.Component {
           });
           calledProductsId.push(item.productId);
           products.push(data.product);
+          totalPrice =
+            totalPrice +
+            this.getPriceBasedOnCurrentCurrency(data.product.prices);
         }
         totalItems = totalItems + item.amount;
       }
@@ -87,16 +95,25 @@ class MiniCart extends React.Component {
       if (products[i].id === productId) return products[i];
     return null;
   };
+  getPriceBasedOnCurrentCurrency(prices) {
+    const { currentCurrency } = this.context;
+    for (let i = 0; i < prices.length; i++)
+      if (prices[i].currency.label === currentCurrency.label)
+        return prices[i].amount;
+    return 0;
+  }
   render() {
+    const { currentCurrency } = this.context;
     const {
       componentIsLoading,
       myCart,
       isDropdownCollapsed,
       totalItems,
+      totalPrice,
     } = this.state;
     // const { toggleDropdownBackDrop } = this.props;
     if (componentIsLoading) return <div>godamn</div>;
-    // this.updateMiniCartifNecessary();
+    console.log(this.props.myCart);
     return (
       <span className="mini-cart">
         <div
@@ -108,48 +125,70 @@ class MiniCart extends React.Component {
             onClick={this.handleDropdown}
           >
             <CartIcon />
-            {totalItems > 0 && (
-              <span className="badge">
-                {" " +
-                  (this.props.totalItems != 0
+            {this.props.totalItems !== 0 &&
+              (totalItems > 0 || this.props.totalItems !== -1) && (
+                <span className="badge">
+                  {this.props.totalItems !== -1
                     ? this.props.totalItems
-                    : totalItems)}
-              </span>
-            )}
+                    : totalItems}
+                </span>
+              )}
           </span>
           <div className="dropdown-content right">
-            <div className="header">
-              <span>My Bag, </span>
-              <span>
-                {(this.props.totalItems != 0
-                  ? this.props.totalItems
-                  : totalItems) + " "}
-                Items
-              </span>
-            </div>
-            <div className="mini-cart-items">
-              {this.props.myCart.length > 0 &&
-                this.props.myCart.map((cartItem) => (
-                  <MiniCartItem
-                    cartItem={cartItem}
-                    product={this.getProductInfo(cartItem.productId)}
-                    key={this.handleCreateKey(cartItem)}
-                  />
-                ))}
-              {this.props.myCart.length < 1 &&
-                this.state.myCart.map((cartItem) => (
-                  <MiniCartItem
-                    cartItem={cartItem}
-                    product={this.getProductInfo(cartItem.productId)}
-                    key={this.handleCreateKey(cartItem)}
-                  />
-                ))}
-            </div>
+            {this.props.totalItems !== 0 &&
+              (totalItems > 0 || this.props.totalItems !== -1) && (
+                <React.Fragment>
+                  <div className="header">
+                    <span>My Bag, </span>
+                    <span>
+                      {(this.props.totalItems != 0
+                        ? this.props.totalItems
+                        : totalItems) + " "}
+                      Items
+                    </span>
+                  </div>
+                  <div className="mini-cart-items">
+                    {this.props.myCart !== null &&
+                      this.props.myCart.map((cartItem) => (
+                        <MiniCartItem
+                          cartItem={cartItem}
+                          updateMiniCart={this.props.updateMiniCart}
+                          product={this.getProductInfo(cartItem.productId)}
+                          key={this.handleCreateKey(cartItem)}
+                        />
+                      ))}
+                    {this.props.myCart == null &&
+                      this.state.myCart.map((cartItem) => (
+                        <MiniCartItem
+                          cartItem={cartItem}
+                          updateMiniCart={this.props.updateMiniCart}
+                          product={this.getProductInfo(cartItem.productId)}
+                          key={this.handleCreateKey(cartItem)}
+                        />
+                      ))}
+                  </div>
+                  <div className="total-price">
+                    <span className="label">Total</span>
+                    <span className="price">
+                      {currentCurrency.label}
+                      {totalPrice}
+                    </span>
+                  </div>
+                  <div className="control-buttons">
+                    <button className="view-bag">VIEW BAG</button>
+                    <button className="check-out">CHECK OUT</button>
+                  </div>
+                </React.Fragment>
+              )}
+            {!(
+              this.props.totalItems !== 0 &&
+              (totalItems > 0 || this.props.totalItems !== -1)
+            ) && <div>Your Cart is Empty Mother fucker!</div>}
           </div>
         </div>
       </span>
     );
   }
 }
-
+MiniCartItem.contextType = Currency;
 export default MiniCart;

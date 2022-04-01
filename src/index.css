@@ -188,6 +188,21 @@ header nav.navbar .nav-actions span.mini-cart-button .badge {
   padding: 5px;
   top: -15px;
   right: -15px;
+  /*display: inline-block; */
+}
+/* header nav.navbar .nav-actions span.mini-cart-button .badge:before,
+header nav.navbar .nav-actions span.mini-cart-button .badge:after {
+  content: "\200B";
+  display: inline-block;
+  line-height: 0px;
+  padding-top: 50%;
+  padding-bottom: 50%;
+} */
+header nav.navbar .nav-actions span.mini-cart-button .badge:before {
+  padding-left: 8px;
+}
+header nav.navbar .nav-actions span.mini-cart-button .badge:after {
+  padding-right: 8px;
 }
 header nav.navbar .nav-actions .mini-cart {
   display: flex;
@@ -460,6 +475,77 @@ header
   object-position: center;
   width: 110px;
   height: 140px;
+}
+header nav.navbar .nav-actions .mini-cart .dropdown-content .total-price {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  line-height: 160%;
+  font-style: normal;
+  margin-bottom: 35px;
+}
+header nav.navbar .nav-actions .mini-cart .dropdown-content > .control-buttons {
+  display: flex;
+  margin-bottom: 12px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button {
+  width: 100%;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button.view-bag {
+  background: transparent;
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
+  margin-right: 12px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button.check-out {
+  background-color: var(--color-pirmary);
+  border: none;
+  color: #fff;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .total-price
+  .label {
+  font-family: "Roboto";
+  font-weight: 600;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .total-price
+  .price {
+  font-family: "Raleway";
+  font-weight: 700;
 }
 /*
   since i didn't know that the link should be the hole <li> or just the text i do it this way so it contains all the <li> block.

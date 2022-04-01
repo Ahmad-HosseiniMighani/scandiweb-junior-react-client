@@ -14,8 +14,8 @@ class App extends React.Component {
       },
       setCurrency: () => {},
     },
-    myCart: [],
-    totalItems: 0,
+    myCart: null,
+    totalItems: -1,
   };
   async componentDidMount() {
     //get it from the Yeeeeeeeeeeeeeeeeeet!
@@ -39,7 +39,11 @@ class App extends React.Component {
     return (
       // <React.Fragment>
       <Currency.Provider value={this.state.currencyContext}>
-        <Navbar myCart={this.state.myCart} totalItems={this.state.totalItems} />
+        <Navbar
+          myCart={this.state.myCart}
+          totalItems={this.state.totalItems}
+          updateMiniCart={this.updateMiniCart}
+        />
         <Routes>
           {/* 
               Replacing might not be ideal here, but we have no homepage and i dont know if we're going to have or not, so for now i redirect it to category page (all) 

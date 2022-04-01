@@ -31,6 +31,7 @@ class Navbar extends React.Component {
                   toggleDropdownBackDrop={this.toggleDropdownBackDrop}
                   myCart={this.props.myCart}
                   totalItems={this.props.totalItems}
+                  updateMiniCart={this.props.updateMiniCart}
                 />
               </div>
             </div>
