@@ -1,31 +1,8 @@
 import React from "react";
 import { Currency } from "../../../contexts";
-import { GetSpecificProduct, client } from "../../../graphql/queries";
 import { ReactComponent as PlusIcon } from "../../../images/plus.svg";
 import { ReactComponent as MinusIcon } from "../../../images/minus.svg";
 class MiniCartItem extends React.Component {
-  state = { data: {}, componentIsLoading: true };
-  async componentDidMount() {
-    // if we dont have a data from server we try to fetch it
-    const { cartItem, product } = this.props;
-    if (product !== null) {
-      this.setState({ componentIsLoading: false });
-      return;
-    }
-    try {
-      const { data } = await client.query({
-        query: GetSpecificProduct(cartItem.productId),
-      });
-      this.setState({
-        componentIsLoading: false,
-        data: data.product,
-      });
-      //   this.setState({ res });
-    } catch (error) {
-      console.log(error);
-      this.setState({ componentIsLoading: false });
-    }
-  }
   handleAttributeRender = (attribute, selectedAttributes) => {
     return (
       <div
@@ -116,13 +93,7 @@ class MiniCartItem extends React.Component {
   };
   render() {
     const { currentCurrency } = this.context;
-    const { componentIsLoading } = this.state;
-    if (componentIsLoading) return <div>What cha be doing mon!</div>;
-    let useStateData = true;
-    if (this.props.product !== null) useStateData = false;
-    const { cartItem } = this.props;
-    const data = useStateData ? this.state.data : this.props.product;
-    console.log(data);
+    const { cartItem, product: data } = this.props;
     return (
       <div className="item">
         <div className="product-details">

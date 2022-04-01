@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { GetSpecificProduct, client } from "../../graphql/queries";
+import { Currency } from "../../contexts";
 
 class ProductComponent extends React.Component {
   state = {
@@ -26,9 +27,6 @@ class ProductComponent extends React.Component {
     } catch (error) {
       console.log(error);
     }
-  }
-  componentDidUpdate() {
-    console.log("PRODUCT UPDATED");
   }
   handleSelectProductImage = (selectedImageUrl) => {
     this.setState({ selectedImageUrl });
@@ -116,7 +114,7 @@ class ProductComponent extends React.Component {
   renderPrice = (prices) => {
     return prices.map(
       (price) =>
-        price.currency.label === "USD" && (
+        price.currency.label === this.context.currentCurrency.label && (
           <div className="product-price" key={"PRICE_" + price.currency.label}>
             <span className="title">PRICE:</span>
             <span className="amount">
@@ -195,7 +193,6 @@ class ProductComponent extends React.Component {
     this.props.updateMiniCart(myCart);
   };
   render() {
-    console.log("PRODUCT Rendered.");
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;
     if (componentIsloading) return <main>Loading bitch</main>;
     if (data === null) return <main>what tha Heil!?</main>;
@@ -253,7 +250,7 @@ class ProductComponent extends React.Component {
     );
   }
 }
-
+ProductComponent.contextType = Currency;
 const Product = (props) => {
   // let navigate = useNavigate(); navigate={navigate}
   const { productId } = useParams();

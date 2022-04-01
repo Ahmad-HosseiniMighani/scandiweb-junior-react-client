@@ -484,49 +484,6 @@ header nav.navbar .nav-actions .mini-cart .dropdown-content .total-price {
   font-style: normal;
   margin-bottom: 35px;
 }
-header nav.navbar .nav-actions .mini-cart .dropdown-content > .control-buttons {
-  display: flex;
-  margin-bottom: 12px;
-}
-header
-  nav.navbar
-  .nav-actions
-  .mini-cart
-  .dropdown-content
-  > .control-buttons
-  button {
-  width: 100%;
-  padding-top: 13px;
-  padding-bottom: 13px;
-  font-family: "Raleway";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 120%;
-}
-header
-  nav.navbar
-  .nav-actions
-  .mini-cart
-  .dropdown-content
-  > .control-buttons
-  button.view-bag {
-  background: transparent;
-  border: 1px solid var(--color-text);
-  color: var(--color-text);
-  margin-right: 12px;
-}
-header
-  nav.navbar
-  .nav-actions
-  .mini-cart
-  .dropdown-content
-  > .control-buttons
-  button.check-out {
-  background-color: var(--color-pirmary);
-  border: none;
-  color: #fff;
-}
 header
   nav.navbar
   .nav-actions
@@ -546,6 +503,77 @@ header
   .price {
   font-family: "Raleway";
   font-weight: 700;
+}
+header nav.navbar .nav-actions .mini-cart .dropdown-content > .control-buttons {
+  display: flex;
+  margin-bottom: 12px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button {
+  width: 100%;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  transition: all 0.3s ease;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button.view-bag {
+  background: transparent;
+  border: 1px solid var(--color-text);
+  color: var(--color-text);
+  margin-right: 12px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button.view-bag:hover {
+  background: var(--color-text);
+  color: #fff;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  > .control-buttons
+  button.check-out {
+  background-color: var(--color-pirmary);
+  border: none;
+  color: #fff;
+}
+header nav.navbar .nav-actions .mini-cart .dropdown-content .empty-cart {
+  font-weight: 600;
+  text-align: center;
+  margin: 10px auto;
 }
 /*
   since i didn't know that the link should be the hole <li> or just the text i do it this way so it contains all the <li> block.
@@ -628,8 +656,10 @@ main h2.title:first-letter {
   visibility: visible;
 }
 .products-container .product:hover .add-to-cart-btn:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(168, 172, 176, 1);
 }
 .products-container .product .add-to-cart-btn svg {
   width: 24px;
@@ -697,6 +727,12 @@ main h2.title:first-letter {
   width: 80px;
   height: 80px;
   background: #fff;
+  transition: all 0.3s ease;
+}
+.product-container .product-gallery .thumbnails .thumbnail:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   cursor: pointer;
 }
 .product-container .product-gallery .thumbnails .thumbnail:not(:last-child) {
@@ -834,6 +870,13 @@ main h2.title:first-letter {
   color: #fff;
   box-sizing: border-box;
   margin-bottom: 40px;
+  transition: all 0.3s ease;
+}
+.product-container .add-to-cart:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 .product-container .out-of-stock {
   align-items: center;
