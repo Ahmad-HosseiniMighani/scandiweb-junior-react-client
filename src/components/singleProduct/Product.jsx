@@ -190,7 +190,7 @@ class ProductComponent extends React.Component {
         myCart[existingProductIndex].amount + 1;
       localStorage.setItem("myCart", JSON.stringify(myCart));
     }
-    this.props.updateMiniCart(myCart);
+    this.props.updateCart(myCart);
   };
   render() {
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;

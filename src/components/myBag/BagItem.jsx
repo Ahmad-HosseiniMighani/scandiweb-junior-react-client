@@ -1,8 +1,9 @@
 import React from "react";
-import { Currency } from "../../../contexts";
-import { ReactComponent as PlusIcon } from "../../../images/plus.svg";
-import { ReactComponent as MinusIcon } from "../../../images/minus.svg";
-class MiniCartItem extends React.Component {
+import { Currency } from "../../contexts";
+import { ReactComponent as PlusIcon } from "../../images/plus.svg";
+import { ReactComponent as MinusIcon } from "../../images/minus.svg";
+
+class BagItem extends React.Component {
   handleAttributeRender = (attribute, selectedAttributes) => {
     return (
       <div
@@ -132,5 +133,6 @@ class MiniCartItem extends React.Component {
     );
   }
 }
-MiniCartItem.contextType = Currency;
-export default MiniCartItem;
+BagItem.contextType = Currency;
+
+export default BagItem;

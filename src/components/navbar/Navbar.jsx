@@ -32,7 +32,7 @@ class Navbar extends React.Component {
                   products={this.props.products}
                   totalItems={this.props.totalItems}
                   totalPrice={this.props.totalPrice}
-                  updateMiniCart={this.props.updateMiniCart}
+                  updateCart={this.props.updateCart}
                 />
               </div>
             </div>

@@ -88,7 +88,7 @@ class MiniCart extends React.Component {
                   {myCart.map((cartItem) => (
                     <MiniCartItem
                       cartItem={cartItem}
-                      updateMiniCart={this.props.updateMiniCart}
+                      updateCart={this.props.updateCart}
                       product={this.getProductInfo(cartItem.productId)}
                       key={this.handleCreateKey(cartItem)}
                     />

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Products from "./components/products/Products";
 import Product from "./components/singleProduct/Product";
+import Bag from "./components/myBag/Bag";
 import { Currency } from "./contexts";
 import { GetSpecificProduct, client } from "./graphql/queries";
 
@@ -77,7 +78,7 @@ class App extends React.Component {
     }
     return 0;
   }
-  updateMiniCart = async (myCart) => {
+  updateCart = async (myCart) => {
     const { products, currentCurrency, calledProductsId } = this.state;
     let totalItems = 0;
     try {
@@ -156,7 +157,7 @@ class App extends React.Component {
             products,
             currentCurrency
           )}
-          updateMiniCart={this.updateMiniCart}
+          updateCart={this.updateCart}
         />
         <Routes>
           {/* 
@@ -165,22 +166,38 @@ class App extends React.Component {
               */}
           <Route path="/" element={<Navigate to="category/all" replace />} />
           <Route
+            path="/cart"
+            element={
+              <Bag
+                myCart={myCart}
+                products={products}
+                totalItems={totalItems}
+                totalPrice={this.getCartItemsTotalPrice(
+                  myCart,
+                  products,
+                  currentCurrency
+                )}
+                updateCart={this.updateCart}
+              />
+            }
+          />
+          <Route
             path="/category"
-            element={<Products updateMiniCart={this.updateMiniCart} />}
+            element={<Products updateCart={this.updateCart} />}
           >
             <Route
               path=":categoryName"
-              element={<Products updateMiniCart={this.updateMiniCart} />}
+              element={<Products updateCart={this.updateCart} />}
             />
             <Route index element={<Navigate to="*" replace />} />
           </Route>
           <Route
             path="/product"
-            element={<Product updateMiniCart={this.updateMiniCart} />}
+            element={<Product updateCart={this.updateCart} />}
           >
             <Route
               path=":productId"
-              element={<Product updateMiniCart={this.updateMiniCart} />}
+              element={<Product updateCart={this.updateCart} />}
             />
             <Route index element={<Navigate to="*" replace />} />
           </Route>

@@ -1043,3 +1043,190 @@ main h2.title:first-letter {
   font-weight: 400;
   font-size: 16px;
 }
+/*    My BAG    */
+main .cart {
+  max-width: 1200px;
+}
+main .cart .header {
+  margin-bottom: 60px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-text);
+}
+main .cart .header span:first-child {
+  font-weight: 700;
+}
+main .cart .cart-items .item {
+  display: flex;
+  padding: 20px 0px;
+  border-top: 1px solid #e5e5e5;
+}
+main .cart .cart-items .item:last-child {
+  margin-bottom: 40px;
+}
+main .cart .cart-items .item .product-details {
+  margin-right: auto;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+  white-space: break-spaces;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main .cart .cart-items .item .product-attribute .attribute-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+main .cart .cart-items .item .product-attribute:not(:last-child) {
+  margin-bottom: 10px;
+}
+main
+  .cart
+  .cart-items
+  .item
+  .product-attribute
+  .attribute-items
+  .attribute-item {
+  font-family: "Source Sans Pro";
+  background: rgba(166, 166, 166, 0.2);
+  border: 1px solid #a6a6a6;
+  color: #a6a6a6;
+  box-sizing: border-box;
+  width: 63px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+main
+  .cart
+  .cart-items
+  .item
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item {
+  width: 40px;
+}
+main
+  .cart
+  .cart-items
+  .item
+  .product-attribute.text-attribute
+  .attribute-items
+  .attribute-item.selected {
+  color: #fff;
+  background: var(--color-text);
+}
+main
+  .cart
+  .cart-items
+  .item
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item.selected {
+  border-radius: 50%;
+  border-color: var(--color-text);
+}
+
+main .cart .cart-items .item .product-title span {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 35px;
+  margin-bottom: 10px;
+}
+main .cart .cart-items .item .product-title span:first-child {
+  font-weight: 600;
+}
+main .cart .cart-items .item .product-title span:last-child {
+  font-weight: 400;
+}
+main .cart .cart-items .item .product-price {
+  display: block;
+  margin-top: 25px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 18px;
+  margin-bottom: 25px;
+}
+main .cart .cart-items .item .control-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 160%;
+}
+main .cart .cart-items .item .control-buttons button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid var(--color-text);
+  box-sizing: border-box;
+  background: transparent;
+}
+main .cart .cart-items .item .control-buttons button svg {
+  vertical-align: middle;
+  height: 15px;
+  width: 15px;
+}
+main .cart .cart-items .item .control-buttons button:hover {
+  cursor: pointer;
+  color: #fff;
+  background: var(--color-text);
+}
+main .cart .cart-items .item .control-buttons button:hover svg path {
+  stroke: #fff;
+}
+main .cart .cart-items .item .product-title span {
+  display: block;
+}
+main .cart .cart-items .item img {
+  object-fit: cover;
+  object-position: center;
+  width: 140px;
+  height: 185px;
+}
+main .cart .total-price {
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  line-height: 160%;
+  font-style: normal;
+  margin-bottom: 35px;
+}
+main .cart .total-price .label {
+  font-family: "Roboto";
+  font-weight: 600;
+}
+main .cart .total-price .price {
+  font-family: "Raleway";
+  font-weight: 700;
+}
+main .cart > .control-buttons {
+  display: flex;
+  margin-bottom: 12px;
+}
+main .cart .empty-cart {
+  font-weight: 600;
+  text-align: center;
+  margin: 10px auto;
+}
