@@ -26,23 +26,57 @@ const CURRENCIES = gql`
     }
   }
 `;
+// const GetSpecificCategoryProducts = (categoryName) => {
+//   return gql`
+//     query GetSpecificCategoryProducts {
+//       category(input: { title: "${categoryName}" }) {
+//         products {
+//           id
+//           name
+//           inStock
+//           gallery
+//           brand
+//           prices {
+//             amount
+//             currency {
+//               label
+//               symbol
+//             }
+//           }
+//         }
+//       }
+//     }
+//   `;
+// };
 const GetSpecificCategoryProducts = (categoryName) => {
   return gql`
     query GetSpecificCategoryProducts {
       category(input: { title: "${categoryName}" }) {
         products {
           id
-          name
-          inStock
-          gallery
-          brand
-          prices {
-            amount
-            currency {
-              label
-              symbol
-            }
+        name
+        inStock
+        gallery
+        description
+        category
+        brand
+        prices {
+          amount
+          currency {
+            label
+            symbol
           }
+        }
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
         }
       }
     }

@@ -164,8 +164,14 @@ class App extends React.Component {
               Also, i assuming that category "all" will be there (always) so with these ideas we can do:
               */}
           <Route path="/" element={<Navigate to="category/all" replace />} />
-          <Route path="/category" element={<Products />}>
-            <Route path=":categoryName" element={<Products />} />
+          <Route
+            path="/category"
+            element={<Products updateMiniCart={this.updateMiniCart} />}
+          >
+            <Route
+              path=":categoryName"
+              element={<Products updateMiniCart={this.updateMiniCart} />}
+            />
             <Route index element={<Navigate to="*" replace />} />
           </Route>
           <Route
