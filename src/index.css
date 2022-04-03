@@ -755,6 +755,11 @@ main h2.title:first-letter {
   gap: 100px 50px;
   justify-content: space-evenly;
 }
+@media (max-width: 1450px) {
+  .products-container {
+    grid-template-columns: auto auto;
+  }
+}
 .products-container .product {
   width: 350px;
   padding: 16px;
@@ -845,6 +850,11 @@ main h2.title:first-letter {
   grid-template-columns: 700px 300px;
   gap: 100px 70px;
   justify-content: center;
+}
+@media (max-width: 1110px) {
+  .product-container {
+    grid-template-columns: 500px 300px;
+  }
 }
 .product-container .product-gallery {
   display: flex;
