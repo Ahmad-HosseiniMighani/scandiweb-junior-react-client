@@ -645,7 +645,7 @@ header
   .mini-cart
   .dropdown-content
   > .control-buttons
-  button {
+  * {
   width: 100%;
   padding-top: 13px;
   padding-bottom: 13px;
@@ -662,7 +662,7 @@ header
   .mini-cart
   .dropdown-content
   > .control-buttons
-  button:hover {
+  *:hover {
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
@@ -674,11 +674,13 @@ header
   .mini-cart
   .dropdown-content
   > .control-buttons
-  button.view-bag {
+  a.view-bag {
   background: transparent;
   border: 1px solid var(--color-text);
   color: var(--color-text);
   margin-right: 12px;
+  text-decoration: none;
+  text-align: center;
 }
 header
   nav.navbar
@@ -686,7 +688,7 @@ header
   .mini-cart
   .dropdown-content
   > .control-buttons
-  button.view-bag:hover {
+  a.view-bag:hover {
   background: var(--color-text);
   color: #fff;
 }

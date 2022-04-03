@@ -1,5 +1,6 @@
 import React from "react";
 import MiniCartItem from "./MiniCartItem";
+import { Link } from "react-router-dom";
 import { Currency } from "../../../contexts";
 import { ReactComponent as CartIcon } from "../../../images/cart.svg";
 
@@ -46,6 +47,11 @@ class MiniCart extends React.Component {
       this.setState({ isDropdownCollapsed: true });
     }
   }
+  handleCloseDropdown = () => {
+    document.removeEventListener("mousedown", this.handleClickOutsideDropdown);
+    this.props.toggleDropdownBackDrop();
+    this.setState({ isDropdownCollapsed: true });
+  };
   handleCreateKey = (cartItem) => {
     let key = cartItem.productId + "";
     for (let i = 0; i < cartItem.attributes.length; i++)
@@ -102,8 +108,19 @@ class MiniCart extends React.Component {
                   </span>
                 </div>
                 <div className="control-buttons">
-                  <button className="view-bag">VIEW BAG</button>
-                  <button className="check-out">CHECK OUT</button>
+                  <Link
+                    to="/cart"
+                    className="view-bag"
+                    onClick={this.handleDropdown}
+                  >
+                    VIEW BAG
+                  </Link>
+                  <button
+                    className="check-out"
+                    onClick={() => alert("wheeee!")}
+                  >
+                    CHECK OUT
+                  </button>
                 </div>
               </React.Fragment>
             )}

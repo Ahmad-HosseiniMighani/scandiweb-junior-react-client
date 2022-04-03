@@ -139,7 +139,7 @@ class App extends React.Component {
       currentCurrency,
       setCurrency,
     } = this.state;
-    if (componentIsLoading) return <div>loading</div>;
+    if (componentIsLoading) return <div></div>;
     return (
       // <React.Fragment>
       <Currency.Provider
