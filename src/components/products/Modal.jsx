@@ -120,7 +120,6 @@ class Modal extends React.Component {
   handleAddToCart = () => {
     const { selectedAttributes, errors } = this.state;
     const { data } = this.props;
-    console.log(errors);
     const newErrors = this.props.handleAddToCart(
       data,
       selectedAttributes,

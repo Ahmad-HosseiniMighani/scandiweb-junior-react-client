@@ -12,18 +12,15 @@ class ProductComponent extends React.Component {
     errors: [],
   };
   async componentDidMount() {
-    console.log("PRODUCT Mounted.");
     try {
       const { data } = await client.query({
         query: GetSpecificProduct(this.props.productId),
       });
-      //   console.log(data);
       this.setState({
         componentIsLoading: false,
         data: data.product,
         selectedImageUrl: data.product.gallery[0],
       });
-      //   this.setState({ res });
     } catch (error) {
       console.log(error);
     }
@@ -194,8 +191,14 @@ class ProductComponent extends React.Component {
   };
   render() {
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;
-    if (componentIsloading) return <main>Loading bitch</main>;
-    if (data === null) return <main>what tha Heil!?</main>;
+    if (componentIsloading) return <main></main>;
+    if (data === null)
+      return (
+        <main>
+          Woops, something went wrong while trying to get your product
+          information.
+        </main>
+      );
     return (
       <main>
         <div className="product-container">
@@ -252,7 +255,6 @@ class ProductComponent extends React.Component {
 }
 ProductComponent.contextType = Currency;
 const Product = (props) => {
-  // let navigate = useNavigate(); navigate={navigate}
   const { productId } = useParams();
   return <ProductComponent {...props} productId={productId} />;
 };

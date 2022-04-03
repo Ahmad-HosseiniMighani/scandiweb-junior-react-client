@@ -9,7 +9,7 @@ class Navbar extends React.Component {
     isBackDropVisible: false,
   };
   toggleDropdownBackDrop = () => {
-    // we can change CSS and aplly display block and none there or we can just render and not render div. i do both just to show
+    // we can change CSS and apply display block and none there or we can just render and not render div. i do both just to show
     const { isBackDropVisible } = this.state;
     this.setState({ isBackDropVisible: !isBackDropVisible });
   };

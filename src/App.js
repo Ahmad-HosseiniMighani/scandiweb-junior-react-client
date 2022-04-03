@@ -65,7 +65,6 @@ class App extends React.Component {
           });
         },
       });
-      //   this.setState({ res });
     } catch (error) {
       console.log(error);
       this.setState({ componentIsLoading: false });
@@ -107,7 +106,6 @@ class App extends React.Component {
           currentCurrency
         ),
       });
-      //   this.setState({ res });
     } catch (error) {
       console.log(error);
     }
@@ -141,7 +139,6 @@ class App extends React.Component {
     } = this.state;
     if (componentIsLoading) return <div></div>;
     return (
-      // <React.Fragment>
       <Currency.Provider
         value={{
           currentCurrency: currentCurrency,
@@ -204,13 +201,13 @@ class App extends React.Component {
           <Route
             path="*"
             element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!...sorry i have to say... BITCH!</p>
+              <main style={{ "text-align": "center", "font-weight": "600" }}>
+                <p>404 NOT FOUND</p>
+                <p>Woops, Where you heading?!</p>
               </main>
             }
           />
         </Routes>
-        {/* </React.Fragment> */}
       </Currency.Provider>
     );
   }

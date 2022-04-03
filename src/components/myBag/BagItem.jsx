@@ -105,7 +105,6 @@ class BagItem extends React.Component {
         : selectedImageIndex + step < 0
         ? product.gallery.length - 1
         : selectedImageIndex + step;
-    console.log(product.gallery.length, newSelectedImageIndex);
     this.setState({ selectedImageIndex: newSelectedImageIndex });
   }
   render() {

@@ -1,5 +1,6 @@
+import React from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import { useQuery, CATEGORIES } from "../../graphql/queries";
+import { client, CATEGORIES } from "../../graphql/queries";
 
 function CustomNavLink({ children, to, ...props }) {
   let resolved = useResolvedPath(to);
@@ -13,19 +14,28 @@ function CustomNavLink({ children, to, ...props }) {
     </li>
   );
 }
-
-const Categories = () => {
-  const { loading, error, data } = useQuery(CATEGORIES);
-  if (loading)
-    return (
-      /* Change it to better thing maybe ? */
-      <ul className="categories">
-        <li className="placeholder"></li>
-        <li className="placeholder"></li>
-        <li className="placeholder"></li>
-      </ul>
-    );
-  if (data)
+class Categories extends React.Component {
+  state = {
+    componentIsLoading: true,
+    data: [],
+  };
+  async componentDidMount() {
+    try {
+      const { data } = await client.query({
+        query: CATEGORIES,
+      });
+      this.setState({
+        componentIsLoading: false,
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({ componentIsLoading: false });
+    }
+  }
+  render() {
+    const { componentIsLoading, data } = this.state;
+    if (componentIsLoading) return <ul></ul>;
     return (
       <ul className="categories">
         {data.categories.map((category) => (
@@ -38,7 +48,6 @@ const Categories = () => {
         ))}
       </ul>
     );
-  if (error) return <ul className="categories">{error}</ul>;
-};
-
+  }
+}
 export default Categories;

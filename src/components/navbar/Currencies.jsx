@@ -29,7 +29,6 @@ class Currencies extends React.Component {
         componentIsLoading: false,
         data,
       });
-      //   this.setState({ res });
     } catch (error) {
       console.log(error);
       this.setState({ componentIsLoading: false });
@@ -62,7 +61,7 @@ class Currencies extends React.Component {
   render() {
     const { componentIsLoading, data, isDropdownCollapsed } = this.state;
     const { currentCurrency, setCurrency } = this.context;
-    if (componentIsLoading) return <div>godamn</div>;
+    if (componentIsLoading) return <span></span>;
     return (
       <span className="change-currency no-select">
         <div

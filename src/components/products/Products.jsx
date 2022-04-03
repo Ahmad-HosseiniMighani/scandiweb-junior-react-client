@@ -5,13 +5,6 @@ import SingleProduct from "./SingleProduct";
 import Modal from "./Modal";
 
 class ProductsComponent extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   // this.modalRef = React.createRef();
-  //   // this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(
-  //   //   this
-  //   // );
-  // }
   state = {
     componentIsLoading: true,
     isModalOpen: false,
@@ -22,12 +15,10 @@ class ProductsComponent extends React.Component {
       const { data } = await client.query({
         query: GetSpecificCategoryProducts(categoryName),
       });
-      //   console.log(data);
       this.setState({
         componentIsLoading: false,
         data: data.category.products,
       });
-      //   this.setState({ res });
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +103,7 @@ class ProductsComponent extends React.Component {
   render() {
     const { componentIsLoading, data, isModalOpen, modalData } = this.state;
     const { categoryName } = this.props;
-    if (componentIsLoading) return <main>Loading bitch</main>;
+    if (componentIsLoading) return <main></main>;
     return (
       <React.Fragment>
         <main>

@@ -56,7 +56,6 @@ class MiniCart extends React.Component {
     let key = cartItem.productId + "";
     for (let i = 0; i < cartItem.attributes.length; i++)
       key = key + "_" + cartItem.attributes[i].value;
-    // console.log(key);
     return key;
   };
   getProductInfo = (productId) => {
