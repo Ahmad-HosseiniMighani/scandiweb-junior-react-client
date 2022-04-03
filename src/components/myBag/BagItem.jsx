@@ -2,8 +2,12 @@ import React from "react";
 import { Currency } from "../../contexts";
 import { ReactComponent as PlusIcon } from "../../images/plus.svg";
 import { ReactComponent as MinusIcon } from "../../images/minus.svg";
+import { ReactComponent as PrevIcon } from "../../images/prev.svg";
 
 class BagItem extends React.Component {
+  state = {
+    selectedImageIndex: 0, // ths can cause problem if some how gallery array shuffles it self :) the other way i was thinking was to save url
+  };
   handleAttributeRender = (attribute, selectedAttributes) => {
     return (
       <div
@@ -92,7 +96,20 @@ class BagItem extends React.Component {
     localStorage.setItem("myCart", JSON.stringify(myCart));
     this.props.updateCart(myCart);
   };
+  handleSelectImage(step) {
+    const { product } = this.props;
+    const { selectedImageIndex } = this.state;
+    const newSelectedImageIndex =
+      selectedImageIndex + step >= product.gallery.length
+        ? 0
+        : selectedImageIndex + step < 0
+        ? product.gallery.length - 1
+        : selectedImageIndex + step;
+    console.log(product.gallery.length, newSelectedImageIndex);
+    this.setState({ selectedImageIndex: newSelectedImageIndex });
+  }
   render() {
+    const { selectedImageIndex } = this.state;
     const { currentCurrency } = this.context;
     const { cartItem, product: data } = this.props;
     return (
@@ -128,7 +145,17 @@ class BagItem extends React.Component {
             <MinusIcon />
           </button>
         </div>
-        <img src={data.gallery[0]} alt="IMG" />
+        <div className="gallery no-select">
+          <div className="control-buttons">
+            <span className="prev" onClick={() => this.handleSelectImage(-1)}>
+              <PrevIcon />
+            </span>
+            <span className="next" onClick={() => this.handleSelectImage(1)}>
+              <PrevIcon />
+            </span>
+          </div>
+          <img src={data.gallery[selectedImageIndex]} alt="IMG" />
+        </div>
       </div>
     );
   }

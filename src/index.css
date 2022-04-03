@@ -1032,11 +1032,11 @@ main h2.title:first-letter {
   color: red;
   font-weight: 800;
 }
-.product-container .product-description {
-  /* IDK if it's ok to do this or not, long description won't look good  with this design*/
-  /* overflow-y: auto;
-  max-height: 300px; */
-}
+/*.product-container .product-description {
+  IDK if it's ok to do this or not, long description won't look good  with this design
+  overflow-y: auto;
+  max-height: 300px;
+}*/
 .product-container .product-description * {
   font-family: "Roboto";
 }
@@ -1165,7 +1165,7 @@ main .cart .cart-items .item .product-price {
   line-height: 18px;
   margin-bottom: 25px;
 }
-main .cart .cart-items .item .control-buttons {
+main .cart .cart-items .item > .control-buttons {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1178,34 +1178,57 @@ main .cart .cart-items .item .control-buttons {
   font-size: 24px;
   line-height: 160%;
 }
-main .cart .cart-items .item .control-buttons button {
+main .cart .cart-items .item > .control-buttons button {
   width: 45px;
   height: 45px;
   border: 1px solid var(--color-text);
   box-sizing: border-box;
   background: transparent;
 }
-main .cart .cart-items .item .control-buttons button svg {
+main .cart .cart-items .item > .control-buttons button svg {
   vertical-align: middle;
   height: 15px;
   width: 15px;
 }
-main .cart .cart-items .item .control-buttons button:hover {
+main .cart .cart-items .item > .control-buttons button:hover {
   cursor: pointer;
   color: #fff;
   background: var(--color-text);
 }
-main .cart .cart-items .item .control-buttons button:hover svg path {
+main .cart .cart-items .item > .control-buttons button:hover svg path {
   stroke: #fff;
 }
 main .cart .cart-items .item .product-title span {
   display: block;
 }
-main .cart .cart-items .item img {
-  object-fit: cover;
-  object-position: center;
+main .cart .cart-items .item .gallery {
   width: 140px;
   height: 185px;
+  position: relative;
+}
+main .cart .cart-items .item .gallery img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+main .cart .cart-items .item .gallery .control-buttons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+main .cart .cart-items .item .gallery .control-buttons .prev {
+  margin-left: 10px;
+  cursor: pointer;
+}
+main .cart .cart-items .item .gallery .control-buttons .next {
+  margin-right: 10px;
+  cursor: pointer;
+  transform: rotateZ(180deg);
 }
 main .cart .total-price {
   display: flex;
