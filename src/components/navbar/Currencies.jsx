@@ -79,7 +79,10 @@ class Currencies extends React.Component {
               {data.currencies.map((currency) => (
                 <li
                   key={"KEY_" + currency.label}
-                  onClick={() => setCurrency(currency)}
+                  onClick={() => {
+                    setCurrency(currency);
+                    this.handleDropdown();
+                  }}
                   className={
                     currentCurrency.label === currency.label
                       ? "active"
