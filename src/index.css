@@ -209,7 +209,7 @@ header nav.navbar ul.categories {
 header nav.navbar .nav-actions {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   margin-right: 100px;
 }
