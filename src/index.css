@@ -20,138 +20,11 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-/*copy out*/
-/*    Modal    */
-.modal {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  background: rgba(57, 55, 72, 0.22);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.modal .modal-content {
-  background-color: #fff;
-  width: 300px;
-  max-height: 500px;
-  overflow: auto;
-  padding: 10px;
-}
-.modal .modal-content span.close-btn {
-  display: block;
-  text-align: right;
-  margin-bottom: 8px;
-}
-.modal .modal-content span.close-btn svg {
-  height: 20px;
-  width: 20px;
-  transform: rotateZ(45deg);
-  cursor: pointer;
-}
-.modal .modal-content .product-attributes {
-  margin-bottom: 40px;
-}
-.modal .modal-content .product-attribute {
-  margin-bottom: 20px;
-}
-.modal .modal-content .product-attribute .attribute-title {
-  display: block;
-  font-family: "Roboto Condensed";
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 18px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.modal .modal-content .product-attribute .attribute-title.warrning-blinking {
-  color: red;
-  animation: infinite 0.6s linear blinking;
-}
-@keyframes blinking {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.modal .modal-content .product-attribute.text-attribute .attribute-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.modal .modal-content .product-attribute.swatch-attribute .attribute-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.modal .modal-content .product-attribute .attribute-items .attribute-item {
-  cursor: pointer;
-  font-family: "Source Sans Pro";
-  border: 1px solid var(--color-text);
-  box-sizing: border-box;
-  width: 63px;
-  height: 40px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-}
-.modal
-  .modal-content
-  .product-attribute.swatch-attribute
-  .attribute-items
-  .attribute-item {
-  width: 40px;
-}
-.modal
-  .modal-content
-  .product-attribute.text-attribute
-  .attribute-items
-  .attribute-item.selected {
-  background-color: var(--color-text);
-  color: #fff;
-}
-.modal
-  .modal-content
-  .product-attribute.swatch-attribute
-  .attribute-items
-  .attribute-item.selected {
-  border-radius: 50%;
-}
-.modal .modal-content button.add-to-cart {
-  cursor: pointer;
-  align-items: center;
-  padding: 16px 32px;
-  width: 100%;
-  background: var(--color-pirmary);
-  border: none;
+/*    NotFound.jsx    */
+main.not-found {
+  text-align: center;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 120%;
-  color: #fff;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
 }
-.modal .modal-content button.add-to-cart:hover {
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  cursor: pointer;
-}
-/*copy out*/
-
 /*    Navbar.jsx    */
 header {
   position: relative;
@@ -426,8 +299,35 @@ header
   .dropdown-content
   .mini-cart-items
   .item
+  .product-attribute:first-child {
+  margin-top: 10px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
   .product-attribute:not(:last-child) {
   margin-bottom: 10px;
+}
+header
+  nav.navbar
+  .nav-actions
+  .mini-cart
+  .dropdown-content
+  .mini-cart-items
+  .item
+  .product-attribute
+  .attribute-title {
+  display: block;
+  font-family: "Roboto Condensed";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
 }
 header
   nav.navbar
@@ -444,8 +344,7 @@ header
   border: 1px solid #a6a6a6;
   color: #a6a6a6;
   box-sizing: border-box;
-  width: 38px;
-  height: 24px;
+  padding: 3px 5px;
   font-weight: 400;
   font-size: 0.8em;
   line-height: 18px;
@@ -466,6 +365,7 @@ header
   .attribute-items
   .attribute-item {
   width: 24px;
+  height: 24px;
 }
 header
   nav.navbar
@@ -606,6 +506,7 @@ header
   object-position: center;
   width: 110px;
   height: 140px;
+  align-self: center;
 }
 header nav.navbar .nav-actions .mini-cart .dropdown-content .total-price {
   display: flex;
@@ -844,6 +745,135 @@ main h2.title:first-letter {
   font-weight: 600;
   /* in the Design its 500 but 600 is more like it, idk why! it's the same font.*/
 }
+/*    Modal    */
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background: rgba(57, 55, 72, 0.22);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal .modal-content {
+  background-color: #fff;
+  width: 300px;
+  max-height: 500px;
+  overflow: auto;
+  padding: 10px;
+}
+.modal .modal-content span.close-btn {
+  display: block;
+  text-align: right;
+  margin-bottom: 8px;
+}
+.modal .modal-content span.close-btn svg {
+  height: 20px;
+  width: 20px;
+  transform: rotateZ(45deg);
+  cursor: pointer;
+}
+.modal .modal-content .product-attributes {
+  margin-bottom: 40px;
+}
+.modal .modal-content .product-attribute {
+  margin-bottom: 20px;
+}
+.modal .modal-content .product-attribute .attribute-title {
+  display: block;
+  font-family: "Roboto Condensed";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.modal .modal-content .product-attribute .attribute-title.warrning-blinking {
+  color: red;
+  animation: infinite 0.6s linear blinking;
+}
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.modal .modal-content .product-attribute.text-attribute .attribute-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.modal .modal-content .product-attribute.swatch-attribute .attribute-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.modal .modal-content .product-attribute .attribute-items .attribute-item {
+  cursor: pointer;
+  font-family: "Source Sans Pro";
+  border: 1px solid var(--color-text);
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+.modal
+  .modal-content
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item {
+  width: 40px;
+  height: 40px;
+}
+.modal
+  .modal-content
+  .product-attribute.text-attribute
+  .attribute-items
+  .attribute-item.selected {
+  background-color: var(--color-text);
+  color: #fff;
+}
+.modal
+  .modal-content
+  .product-attribute.swatch-attribute
+  .attribute-items
+  .attribute-item.selected {
+  border-radius: 50%;
+}
+.modal .modal-content button.add-to-cart {
+  cursor: pointer;
+  align-items: center;
+  padding: 16px 32px;
+  width: 100%;
+  background: var(--color-pirmary);
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: #fff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+.modal .modal-content button.add-to-cart:hover {
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+}
 /*    Product    */
 .product-container {
   display: grid;
@@ -953,8 +983,7 @@ main h2.title:first-letter {
   font-family: "Source Sans Pro";
   border: 1px solid var(--color-text);
   box-sizing: border-box;
-  width: 63px;
-  height: 40px;
+  padding: 10px 12px;
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
@@ -969,6 +998,7 @@ main h2.title:first-letter {
   .attribute-items
   .attribute-item {
   width: 40px;
+  height: 40px;
 }
 .product-container
   .product-attribute.text-attribute
@@ -1095,8 +1125,17 @@ main .cart .cart-items .item .product-attribute .attribute-items {
   flex-wrap: wrap;
   gap: 5px;
 }
-main .cart .cart-items .item .product-attribute:not(:last-child) {
+main .cart .cart-items .item .product-attribute .attribute-title {
+  display: block;
+  font-family: "Roboto Condensed";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
   margin-bottom: 10px;
+  text-transform: uppercase;
+}
+main .cart .cart-items .item .product-attribute:not(:last-child) {
+  margin-bottom: 20px;
 }
 main
   .cart
@@ -1110,8 +1149,7 @@ main
   border: 1px solid #a6a6a6;
   color: #a6a6a6;
   box-sizing: border-box;
-  width: 63px;
-  height: 40px;
+  padding: 10px 12px;
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
@@ -1129,6 +1167,7 @@ main
   .attribute-items
   .attribute-item {
   width: 40px;
+  height: 40px;
 }
 main
   .cart
@@ -1215,6 +1254,8 @@ main .cart .cart-items .item .gallery {
   width: 140px;
   height: 185px;
   position: relative;
+  display: flex;
+  align-self: center;
 }
 main .cart .cart-items .item .gallery img {
   object-fit: cover;

@@ -9,6 +9,7 @@ class MiniCartItem extends React.Component {
         className={"product-attribute " + attribute.type + "-attribute"}
         key={attribute.id}
       >
+        <span className="attribute-title">{attribute.name}:</span>
         <div className="attribute-items">
           {attribute.items.map((item) => (
             <span

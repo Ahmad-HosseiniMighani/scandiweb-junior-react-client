@@ -14,6 +14,7 @@ class BagItem extends React.Component {
         className={"product-attribute " + attribute.type + "-attribute"}
         key={attribute.id}
       >
+        <span className="attribute-title">{attribute.name}:</span>
         <div className="attribute-items">
           {attribute.items.map((item) => (
             <span
@@ -145,14 +146,16 @@ class BagItem extends React.Component {
           </button>
         </div>
         <div className="gallery no-select">
-          <div className="control-buttons">
-            <span className="prev" onClick={() => this.handleSelectImage(-1)}>
-              <PrevIcon />
-            </span>
-            <span className="next" onClick={() => this.handleSelectImage(1)}>
-              <PrevIcon />
-            </span>
-          </div>
+          {data.gallery.length > 1 && (
+            <div className="control-buttons">
+              <span className="prev" onClick={() => this.handleSelectImage(-1)}>
+                <PrevIcon />
+              </span>
+              <span className="next" onClick={() => this.handleSelectImage(1)}>
+                <PrevIcon />
+              </span>
+            </div>
+          )}
           <img src={data.gallery[selectedImageIndex]} alt="IMG" />
         </div>
       </div>

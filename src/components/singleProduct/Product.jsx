@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { GetSpecificProduct, client } from "../../graphql/queries";
 import { Currency } from "../../contexts";
-
 class ProductComponent extends React.Component {
   state = {
     data: null,
@@ -189,6 +188,7 @@ class ProductComponent extends React.Component {
     }
     this.props.updateCart(myCart);
   };
+
   render() {
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;
     if (componentIsloading) return <main></main>;
@@ -245,6 +245,7 @@ class ProductComponent extends React.Component {
             )}
             <div
               className="product-description"
+              id="product-description"
               dangerouslySetInnerHTML={{ __html: data.description }}
             />
           </div>

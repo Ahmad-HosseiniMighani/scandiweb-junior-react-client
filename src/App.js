@@ -201,7 +201,7 @@ class App extends React.Component {
           <Route
             path="*"
             element={
-              <main style={{ "text-align": "center", "font-weight": "600" }}>
+              <main className="not-found">
                 <p>404 NOT FOUND</p>
                 <p>Woops, Where you heading?!</p>
               </main>
