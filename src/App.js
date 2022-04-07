@@ -94,7 +94,7 @@ class App extends React.Component {
         const { data } = await client.query({
           query: GetSpecificProducts(calledProductsId),
         });
-        products.push(Object.values(data));
+        products.push(...Object.values(data));
       }
       this.setState({
         myCart,
