@@ -632,7 +632,7 @@ header nav.navbar ul.categories li a {
   box-sizing: border-box;
 }
 header nav.navbar ul.categories li:hover a,
-header nav.navbar ul.categories li.active a {
+header nav.navbar ul.categories li a.active {
   font-weight: 600;
   color: var(--color-pirmary);
   border-bottom: 2px solid var(--color-pirmary);

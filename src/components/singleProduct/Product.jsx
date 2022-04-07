@@ -1,8 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { GetSpecificProduct, client } from "../../graphql/queries";
+import DOMPurify from "dompurify";
+import { GetSpecificProducts, client } from "../../graphql/queries";
 import { Currency } from "../../contexts";
-class ProductComponent extends React.Component {
+class Product extends React.Component {
   state = {
     data: null,
     componentIsLoading: true,
@@ -11,14 +11,15 @@ class ProductComponent extends React.Component {
     errors: [],
   };
   async componentDidMount() {
+    const { productId } = this.props.match.params;
     try {
       const { data } = await client.query({
-        query: GetSpecificProduct(this.props.productId),
+        query: GetSpecificProducts([productId]),
       });
       this.setState({
         componentIsLoading: false,
-        data: data.product,
-        selectedImageUrl: data.product.gallery[0],
+        data: data["product_0"],
+        selectedImageUrl: data["product_0"].gallery[0],
       });
     } catch (error) {
       console.log(error);
@@ -123,7 +124,7 @@ class ProductComponent extends React.Component {
   };
   handleAddToCart = () => {
     const { selectedAttributes, errors, data } = this.state;
-    const productId = this.props.productId;
+    const { productId } = this.props.match.params;
     //get all cart items
     if (errors.length > 0) return;
     // let find where the error is
@@ -176,7 +177,7 @@ class ProductComponent extends React.Component {
     }
     if (existingProductIndex < 0) {
       myCart.push({
-        productId: this.props.productId,
+        productId,
         attributes: selectedAttributes,
         amount: 1,
       });
@@ -188,7 +189,6 @@ class ProductComponent extends React.Component {
     }
     this.props.updateCart(myCart);
   };
-
   render() {
     const { componentIsloading, data, selectedImageUrl, errors } = this.state;
     if (componentIsloading) return <main></main>;
@@ -246,7 +246,9 @@ class ProductComponent extends React.Component {
             <div
               className="product-description"
               id="product-description"
-              dangerouslySetInnerHTML={{ __html: data.description }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(data.description),
+              }}
             />
           </div>
         </div>
@@ -254,9 +256,5 @@ class ProductComponent extends React.Component {
     );
   }
 }
-ProductComponent.contextType = Currency;
-const Product = (props) => {
-  const { productId } = useParams();
-  return <ProductComponent {...props} productId={productId} />;
-};
+Product.contextType = Currency;
 export default Product;

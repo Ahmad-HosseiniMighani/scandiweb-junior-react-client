@@ -1,11 +1,6 @@
 import React from "react";
 import { Currency } from "./../../contexts";
-import {
-  //   useQuery,
-  CURRENCIES,
-  client,
-  //   gql,
-} from "../../graphql/queries";
+import { CURRENCIES, client } from "../../graphql/queries";
 
 class Currencies extends React.Component {
   constructor(props) {

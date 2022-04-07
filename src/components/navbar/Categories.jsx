@@ -1,19 +1,7 @@
 import React from "react";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { client, CATEGORIES } from "../../graphql/queries";
 
-function CustomNavLink({ children, to, ...props }) {
-  let resolved = useResolvedPath(to);
-  let match = useMatch({ path: resolved.pathname, end: true });
-
-  return (
-    <li className={match ? " active" : ""}>
-      <Link to={to} {...props}>
-        {children}
-      </Link>
-    </li>
-  );
-}
 class Categories extends React.Component {
   state = {
     componentIsLoading: true,
@@ -39,12 +27,9 @@ class Categories extends React.Component {
     return (
       <ul className="categories">
         {data.categories.map((category) => (
-          <CustomNavLink
-            key={"KEY_" + category.name}
-            to={"category/" + category.name}
-          >
-            {category.name}
-          </CustomNavLink>
+          <li key={"KEY_" + category.name}>
+            <NavLink to={"/category/" + category.name}>{category.name}</NavLink>
+          </li>
         ))}
       </ul>
     );

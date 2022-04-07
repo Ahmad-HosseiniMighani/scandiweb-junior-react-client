@@ -26,28 +26,6 @@ const CURRENCIES = gql`
     }
   }
 `;
-// const GetSpecificCategoryProducts = (categoryName) => {
-//   return gql`
-//     query GetSpecificCategoryProducts {
-//       category(input: { title: "${categoryName}" }) {
-//         products {
-//           id
-//           name
-//           inStock
-//           gallery
-//           brand
-//           prices {
-//             amount
-//             currency {
-//               label
-//               symbol
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `;
-// };
 const GetSpecificCategoryProducts = (categoryName) => {
   return gql`
     query GetSpecificCategoryProducts {
@@ -82,37 +60,40 @@ const GetSpecificCategoryProducts = (categoryName) => {
     }
   `;
 };
-const GetSpecificProduct = (productId) => {
-  return gql`
-    query GetSpecificProduct {
-      product(id: "${productId}") {
+const GetSpecificProducts = (productsId) => {
+  let query = "query GetSpecificProduct {";
+  for (let i = 0; i < productsId.length; i++) {
+    query =
+      query +
+      `product_${i} : product(id: "${productsId[i]}") {
+      id
+      name
+      inStock
+      gallery
+      description
+      category
+      brand
+      prices {
+        amount
+        currency {
+          label
+          symbol
+        }
+      }
+      attributes {
         id
         name
-        inStock
-        gallery
-        description
-        category
-        brand
-        prices {
-          amount
-          currency {
-            label
-            symbol
-          }
-        }
-        attributes {
+        type
+        items {
+          displayValue
+          value
           id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
         }
       }
     }
-  `;
+    `;
+  }
+  return gql(query + "}");
 };
 export {
   useQuery,
@@ -122,5 +103,5 @@ export {
   CATEGORIES,
   CURRENCIES,
   GetSpecificCategoryProducts,
-  GetSpecificProduct,
+  GetSpecificProducts,
 };

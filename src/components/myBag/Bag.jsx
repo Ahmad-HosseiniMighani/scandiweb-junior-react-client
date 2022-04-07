@@ -27,7 +27,7 @@ class Bag extends React.Component {
     const { currentCurrency } = this.context;
     const { componentIsLoading } = this.state;
     const { myCart, totalItems, totalPrice } = this.props;
-    if (componentIsLoading) return <div></div>;
+    if (componentIsLoading) return <div>s</div>;
     return (
       <main>
         <div className="cart">

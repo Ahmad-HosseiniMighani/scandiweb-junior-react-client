@@ -1,21 +1,22 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { client, GetSpecificCategoryProducts } from "../../graphql/queries";
 import SingleProduct from "./SingleProduct";
 import Modal from "./Modal";
 
-class ProductsComponent extends React.Component {
+class Products extends React.Component {
   state = {
+    previousCategoryName: "all",
     componentIsLoading: true,
     isModalOpen: false,
   };
   async componentDidMount() {
-    const { categoryName } = this.props;
+    const { categoryName } = this.props.match.params;
     try {
       const { data } = await client.query({
         query: GetSpecificCategoryProducts(categoryName),
       });
       this.setState({
+        previousCategoryName: categoryName,
         componentIsLoading: false,
         data: data.category.products,
       });
@@ -100,10 +101,28 @@ class ProductsComponent extends React.Component {
     this.props.updateCart(myCart);
     return []; // means no errors
   };
+  handleGetNewProducts = async () => {
+    const { previousCategoryName } = this.state;
+    const { categoryName } = this.props.match.params;
+    if (previousCategoryName === categoryName) return;
+    try {
+      const { data } = await client.query({
+        query: GetSpecificCategoryProducts(categoryName),
+      });
+      this.setState({
+        previousCategoryName: categoryName,
+        componentIsLoading: false,
+        data: data.category.products,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
+    this.handleGetNewProducts();
     const { componentIsLoading, data, isModalOpen, modalData } = this.state;
-    const { categoryName } = this.props;
-    if (componentIsLoading) return <main></main>;
+    const { categoryName } = this.props.match.params;
+    if (componentIsLoading) return <main>Loading...</main>;
     return (
       <React.Fragment>
         <main>
@@ -130,9 +149,4 @@ class ProductsComponent extends React.Component {
     );
   }
 }
-
-const Products = (props) => {
-  const { categoryName } = useParams();
-  return <ProductsComponent {...props} categoryName={categoryName} />;
-};
 export default Products;
