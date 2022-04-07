@@ -33,7 +33,7 @@ class App extends React.Component {
       let myCart = JSON.parse(localStorage.getItem("myCart"));
       let products = [];
       let calledProductsId = [];
-      if (myCart === null) {
+      if (myCart === null || myCart.length < 1) {
         myCart = [];
       } else {
         for (const item of myCart) {
@@ -82,7 +82,7 @@ class App extends React.Component {
     const { products, currentCurrency, calledProductsId } = this.state;
     let totalItems = 0;
     try {
-      if (myCart === null) {
+      if (myCart === null || myCart.length < 1) {
         myCart = [];
       } else {
         for (const item of myCart) {

@@ -19,7 +19,8 @@ class Product extends React.Component {
       this.setState({
         componentIsLoading: false,
         data: data["product_0"],
-        selectedImageUrl: data["product_0"].gallery[0],
+        selectedImageUrl:
+          data["product_0"] === null ? "" : data["product_0"].gallery[0],
       });
     } catch (error) {
       console.log(error);
