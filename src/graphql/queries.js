@@ -61,7 +61,7 @@ const GetSpecificCategoryProducts = (categoryName) => {
   `;
 };
 const GetSpecificProducts = (productsId) => {
-  let query = "query GetSpecificProduct {";
+  let query = "query GetSpecificProducts {";
   for (let i = 0; i < productsId.length; i++) {
     query =
       query +
